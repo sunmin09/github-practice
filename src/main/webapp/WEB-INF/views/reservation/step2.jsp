@@ -5,9 +5,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>** 가격 선택 **</title>
 </head>
 <body>
+인원수 선택 
+가격정보 사업자 DB에서 가져오기
+
 
 </body>
 </html>

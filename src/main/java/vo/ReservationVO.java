@@ -8,7 +8,7 @@ public class ReservationVO {
 	private String rpdate;
 	private String rptime;
 	private int rperson;
-	private int no;
+	private String id;
 	private int cno;
 	private String rdate;
 	private String rmemo;

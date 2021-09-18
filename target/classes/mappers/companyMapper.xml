@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="one.mapper.CompanyMapper">
+
+<!-- ** 검색기능있는 PageList 
+	<select id="checkList" resultType="vo.CompanyVO">
+		select * from company where ctype in 
+		<foreach collection="check" item="it" open="(" close=")" separator=",">
+			#{it}
+		</foreach>
+		order by cno asc
+	</select> -->
+
+
+	<select id="selectList" resultType="vo.CompanyVO">
+		select * from company
+	</select>
+	
+	<select id="selectOne" resultType="vo.CompanyVO">
+		select * from company where cno = #{cno}
+	</select>
+
+	<insert id="insert">
+		insert into company values(
+		#{cno},#{cpw},#{cname},#{ctype},#{cinfo},#{caddr},#{cdate},#{cdate_s},#{cdate_e},
+		#{period_s},#{period_e},#{cimage},#{ctel},#{cprice},#{csite},#{cpark},#{comUploadfile})
+	</insert>
+	
+	<update id="update">
+		update company set cpw=#{cpw}, cname=#{cname}, ctype=#{ctype}, cinfo=#{cinfo}, caddr=#{caddr}
+		, cdate=#{cdate}, cdate_s=#{cdate_s}, cdate_e=#{cdate_e}, period_s=#{period_s}, period_e=#{period_e}, cimage=#{cimage}, ctel=#{ctel}
+		, cprice=#{cprice}, csite=#{csite}, cpark=#{cpark}, comUploadfile=#{comUploadfile} where cno=#{cno}
+	</update>
+	
+	<delete id="delete">
+		delete from company where cno=#{cno}	
+	</delete>
+
+</mapper>  

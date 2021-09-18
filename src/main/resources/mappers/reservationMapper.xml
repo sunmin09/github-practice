@@ -3,12 +3,22 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="one.mapper.ReservationMapper">
 
+    
+    <select id="selectList" resultType="vo.MemberVO">
+		select * from reservation where id != 'admin' order by id
+	</select>
+	
+	<select id="selectOne" resultType="vo.MemberVO">
+		select * from reservation where id = #{id}
+	</select>
 
 	<insert id="insert">
 		insert into reservation values(#{rno},#{rpdate},#{rptime})
 	</insert>
 	
-	<update id="update1">
+	<!-- 예약접수 방식 선택 후 업데이트 수정 -->
+	<!-- => 예약접수 단계를 업데이트 처리 or 예약정보 수정을 업데이트 처리 -->
+	<update id="update">
 		update reservation set rperson=#{rperson}, rprice=#{rprice} where rno=#{rno}
 	</update>
 	
@@ -20,5 +30,8 @@
 		update reservation set rpay=#{rpay} where rno=#{rno}
 	</update>
 
-
+    <delete id="delete">
+		delete from reservation where rno=#{rno}	
+	</delete>
+	
 </mapper>  

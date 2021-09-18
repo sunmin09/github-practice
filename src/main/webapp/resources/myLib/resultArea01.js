@@ -1,4 +1,4 @@
-// ** 예약일/회차선택
+// ** 예약일/시간선택
   $('#rpdate').click(function() {
 		$.ajax({
 			type:'Get',
@@ -89,8 +89,6 @@
 		}
 	}); //ajax
   }); //ajoinf_click	
-	
-}); //ready
 
 // ** Ajax 의  input Tag 의  Data (Value) 처리방법
 // 1) Form 의 serialize()

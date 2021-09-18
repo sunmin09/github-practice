@@ -5,9 +5,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>** 결제하기 **</title>
 </head>
 <body>
+
+결제수단 선택
+
 
 </body>
 </html>

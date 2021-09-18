@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="one.mapper.PmemberMapper">
+
+
+
+	<!-- ID 중복 확인 -->
+	<select id="idCheck" parameterType="String" resultType="int">
+		select count(id) from pmember where id=#{id}
+	</select>
+	
+	<!-- 패스워드 확인 -->	
+	<select id="passCheck" resultType="int">
+		select count(*) from pmember where id=#{id} and pw=#{pw}
+	</select>
+	
+	
+	
+	<!-- ID 찾기 -->
+	<select id="pFindId" resultType="vo.PmemberVO"> 
+		select id from pmember where name=#{name} and email=#{email} 
+	</select> 
+	<!-- Password 찾기 -->
+	<select id="pFindPw" resultType="vo.PmemberVO"> 
+		select pw from pmember where id=#{id} and name=#{name}
+	</select> 
+	
+	
+<sql id="search">
+  <if test="keyword != null">
+     <bind name="keyVal" value="'%'+keyword+'%'"/>
+  </if>   
+  <choose>
+     <when test="searchType =='i'.toString()">
+        and id         Like #{keyVal} )
+     </when>
+     <when test="searchType =='m'.toString()">
+        and name       Like #{keyVal} )
+     </when>
+     <when test="searchType =='b'.toString()">
+        and birth   Like #{keyVal} )
+     </when>
+     <when test="searchType =='t'.toString()">
+        and tel   Like #{keyVal} )
+     </when>
+     <when test="searchType =='a'.toString()">
+        and addr   Like #{keyVal} )
+     </when>
+     <when test="searchType =='im'.toString()">
+        and id 	  	   Like #{keyVal}
+        or  name       Like #{keyVal} )
+     </when>
+     <otherwise>)</otherwise> 
+  </choose>
+</sql>
+	
+	<!-- ** SearchPageList(Sql문 추가)-->
+	<select id="searchRowsCount" resultType="int">
+		<![CDATA[ select count(*) from pmember where ( id <> 'admin' ]]> 
+		<include refid="search"></include>
+	</select>
+	
+ 	<select id="searchList" resultType="vo.PmemberVO">
+		select id,pw,name,birth,tel,email,addr from
+		(select p.* , ROW_NUMBER() OVER(order by no) rnum from pmember p where id !='admin' 
+		<include refid="search"></include>
+		where rnum between #{sno} and #{eno} 
+	</select>
+	
+	<select id="selectList" resultType="vo.PmemberVO">
+		select * from pmember where id != 'admin' order by no
+	</select>
+	
+	<select id="selectOne" resultType="vo.PmemberVO">
+		select * from pmember where id = #{id}
+	</select>
+	
+	
+
+	<insert id="insert">
+		insert into pmember values(
+		#{id},#{pw},#{name},#{birth},#{tel},#{email},#{addr, jdbcType=VARCHAR})
+	</insert>
+	
+	
+	<update id="update">
+		update pmember 
+		set pw=#{pw}, name=#{name}, birth=#{birth},
+		    tel=#{tel}, email=#{email}, addr=#{addr}
+		where id=#{id}
+	</update>
+	
+	<delete id="delete">
+		delete from pmember where id=#{id} and pw=#{pw}
+	</delete>
+	
+</mapper>
